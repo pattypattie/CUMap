@@ -6,6 +6,19 @@
 /* .h-100vh {
     height: 100vh;
 } */
+.badge{
+    border-radius: 3px;
+    padding: 2px;
+    position:center;
+}
+#valuePM{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 40px;
+    color:white;
+}
+#TextStatus{
+    font-weight:500;
+}
 
 .overflow-hidden {
     overflow: hidden;
