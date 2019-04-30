@@ -410,6 +410,8 @@ var initMap = function () {
     buildsearchbox.addListener('sel_bld', searchbuildfrombox());
 
     function searchbuildfrombox() {
+
+        closeCourseInfo()
         buildsearchbox.onkeydown = function () {
             if (event.key === 'Enter') {
                 if (buildsearchbox.value.length == 0) {
@@ -462,6 +464,11 @@ function courseOnEnter(ele) {
 
 function searchCourse() {
 
+    document.getElementById("building-search-box").value = "";
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+
     var ms = document.getElementById("method-select");
     ms.style.display = "none";
 
@@ -479,10 +486,10 @@ function searchCourse() {
         indexcount = allcoursecount.findIndex(ii => ii.crsec === currentcourse + " " + currentsec)
         coursedays = allcoursecount[indexcount].countcrssec
         showCourse(theCourse);
-
-        // hide landmark
-        var ld = document.getElementById("landmark-dropdown");
-        ld.style.display = "none";
+        /*
+                // hide landmark
+                var ld = document.getElementById("landmark-dropdown");
+                ld.style.display = "none";*/
     } else {
         alert("Please enter course.")
     }
@@ -544,7 +551,8 @@ function showCourse(theCourse) {
     var currentcoursebld = []
     /********* */
     for (var times = 0; times < coursedays; times++) {
-        htmltext = htmltext + "<div id=\"crsdiv" + times + "\"><p>Course : " + nameid + "<br> Lecturer : " + allcourseinfo[arrayindex + times].Prof_Name + "<br> Section : " + currentsec + "<br> Day : " + allcourseinfo[arrayindex + times].Day + "<br> Time : " + allcourseinfo[arrayindex + times].ctime + "<br> Faculty : " + allcourseinfo[arrayindex + times].faculty_name + "<br> Room : " + allcourseinfo[arrayindex + times].room_number + "<br> Floor : " + allcourseinfo[arrayindex + times].floor + "<br> Building : " + allcourseinfo[arrayindex + times].bld_name + "</p>" + "<button class=\"btn-go\" id=\"courseroute" + times + "\" onclick=\"goToClass()\">Find</button><br><br><div>"
+        //htmltext = htmltext + "<div id=\"crsdiv" + times + "\"><p>Course : " + nameid + "<br> Lecturer : " + allcourseinfo[arrayindex + times].Prof_Name + "<br> Section : " + currentsec + "<br> Day : " + allcourseinfo[arrayindex + times].Day + "<br> Time : " + allcourseinfo[arrayindex + times].ctime + "<br> Faculty : " + allcourseinfo[arrayindex + times].faculty_name + "<br> Room : " + allcourseinfo[arrayindex + times].room_number + "<br> Floor : " + allcourseinfo[arrayindex + times].floor + "<br> Building : " + allcourseinfo[arrayindex + times].bld_name + "</p>" + "<button class=\"btn-go\" id=\"courseroute" + times + "\" onclick=\"goToClass()\">Find</button><br><br><div>"
+        htmltext = htmltext + " <div id=\"crsdiv" + times + "\"><br><p><b>Course</b> : " + nameid + "<br> <b>Lecturer</b> : " + allcourseinfo[arrayindex + times].Prof_Name + "<br> <b>Section</b> : " + currentsec + "<br> <b>Day</b> : " + allcourseinfo[arrayindex + times].Day + "<br> <b>Time</b> : " + allcourseinfo[arrayindex + times].ctime + "<br> <b>Faculty</b> : " + allcourseinfo[arrayindex + times].faculty_name + "<br> <b>Room</b> : " + allcourseinfo[arrayindex + times].room_number + "<br> <b>Floor</b> : " + allcourseinfo[arrayindex + times].floor + "<br> <b>Building</b> : " + allcourseinfo[arrayindex + times].bld_name + "</p>" + "<button class=\"btn-go\" id=\"courseroute" + times + "\" onclick=\"goToClass()\">Find</button><br><div>"
         // htmltext = htmltext + "<div id=\"crsdiv\"" + times + "><p>Course : " + nameid + "<br> Lecturer : " + allcourseinfo[arrayindex + times].Prof_Name + "<br> Section : " + currentsec + "<br> Day : " + allcourseinfo[arrayindex + times].Day + "<br> Time : " + allcourseinfo[arrayindex + times].ctime + "<br> Faculty : " + allcourseinfo[arrayindex + times].faculty_name + "<br> Room : " + allcourseinfo[arrayindex + times].room_number + "<br> Floor : " + allcourseinfo[arrayindex + times].floor + "<br> Building : " + allcourseinfo[arrayindex + times].bld_name + "</p>" + "<input type=\"checkbox\"><br><br><br><div>"
         bname = allcourseinfo[arrayindex + times].bld_name;
         bb = buildingdata.findIndex(iii => iii.Bld_name === bname)
@@ -624,7 +632,7 @@ function mapFunc(fac, building) {
             flList.add(flarr[10]);
             flList.add(flarr[12]);
             //default floor is M
-            document.getElementById("show-map").innerHTML = "<center><img src=\"img/ENG0100-FR90.png\"></center>"
+            document.getElementById("show-map").innerHTML = "<center><img width=\"50%\" src=\"img/ENG0100-FR90.png\"></center>"
             flList.value = "Floor M";
         }
         else {
@@ -637,7 +645,7 @@ function mapFunc(fac, building) {
             }
 
             //default floor is 1
-            document.getElementById("show-map").innerHTML = "<center><img src=\"img/ENG0" + building + "-FR1.png\"></center>"
+            document.getElementById("show-map").innerHTML = "<center><img width=\"90%\" src=\"img/ENG0" + building + "-FR1.png\"></center>"
         }
 
         document.getElementById("building-num").innerText = "Engineering Building " + building;
@@ -651,7 +659,7 @@ function mapFunc(fac, building) {
         }
         flList.value = "Floor 1";
 
-        document.getElementById("show-map").innerHTML = "<center><img src=\"img/ARTS01-FR1.png\"></center>"
+        document.getElementById("show-map").innerHTML = "<center><img width=\"50%\" src=\"img/ARTS01-FR1.png\"></center>"
         document.getElementById("building-num").innerText = "Maha Chakri Sirindhorn Building";
     }
 }
@@ -719,10 +727,10 @@ function flFunc() {
         flstr = parseInt(flstr[1]) + 90;
     }
     if (currentFac == 0) { //if it is a building in faculty of engineering
-        document.getElementById("show-map").innerHTML = "<center><img src=\"img/ENG0" + currentBuild + "-FR" + flstr + ".png\"></center>"
+        document.getElementById("show-map").innerHTML = "<center><img width=\"90%\" src=\"img/ENG0" + currentBuild + "-FR" + flstr + ".png\"></center>"
     }
     else if (currentFac == 1) { //if it is a building in faculty of arts
-        document.getElementById("show-map").innerHTML = "<center><img src=\"img/ARTS01-FR" + flstr + ".png\"></center>"
+        document.getElementById("show-map").innerHTML = "<center><img width=\"90%\" src=\"img/ARTS01-FR" + flstr + ".png\"></center>"
     }
 }
 // Determine best travel/transport mode
@@ -1308,6 +1316,7 @@ $("#spin").click(function () {
 
 function markerAndPlanFromBld() {
 
+    document.getElementById("course-search").value = "";
 
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
@@ -1317,6 +1326,7 @@ function markerAndPlanFromBld() {
     var ms = document.getElementById("method-select");
     ms.style.display = "block";
     document.getElementById("telldest").innerHTML = "Destination : " + bname;
+    document.getElementById("dest-lo").innerHTML = bname;
 
     openFloorPlan()
     if (buildingdata[indexBld].Bld_name == "Maha Chakri Sirindhorn Building") {

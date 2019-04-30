@@ -40,19 +40,36 @@ function main() {
         displayData(p);
 
         value_Span.innerHTML = p;
-        if (p <= 50 && p >= 0) {
-          TextStatus.innerHTML = "GOOD";
-          colorChanged.style.background = "green";
+        if (p <= 9 && p >= 0) {
+          TextStatus.innerHTML = "LOW";
+          colorChanged.style.background = "#00A85A";
         }
-        if (p > 50 && p <= 100) 
-        {TextStatus.innerHTML = "MODERATE";
-        colorChanged.style.background = "yellow";
-            
+        if (p > 9 && p <= 26) {
+          TextStatus.innerHTML = "MODERATE";
+          colorChanged.style.background = "#0775C1"; 
         }
-        if (p > 100 && p <= 150) TextStatus.innerHTML = "UNHEATHY for sensitive groups";
-        if (p > 150 && p <= 200) TextStatus.innerHTML = "Unhealthy";
-        if (p > 200 && p <= 300) TextStatus.innerHTML = "VERY UNHEALTHY";
-        if (p > 300 && p < 500) TextStatus.innerHTML = "Hazardous";
+
+        if (p > 26 && p <= 40) {
+          TextStatus.innerHTML = "UNHEALTHY<br><small>for sensitive groups</small>";
+          colorChanged.style.background = "#FBB410"; 
+        }
+        if (p > 40 && p <= 107){
+          TextStatus.innerHTML = "UNHEALTHY";
+          colorChanged.style.background = "#F16720"; 
+        }
+        if (p > 107 && p <= 178){
+          TextStatus.innerHTML = "VERY UNHEALTHY";
+          colorChanged.style.background = "#EC3427"; 
+        }
+        if (p > 178 && p <= 250){
+          TextStatus.innerHTML = "HAZARDOUS<br><small>(High)</small>";
+          colorChanged.style.background = "#A22617"; 
+        } 
+        if (p > 250){
+          TextStatus.innerHTML = "HAZARDOUS<br><small>(Extreme)</small>";
+          colorChanged.style.background = "#571B0B"; 
+        } 
+
         }
        });
   }
